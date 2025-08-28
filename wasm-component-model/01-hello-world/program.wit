@@ -1,0 +1,50 @@
+package tutorial:program@0.1.0;
+
+interface greeter {
+	hello: func();
+}
+
+world program {
+	import wasi:io/streams@0.2.7;
+	import wasi:cli/stdout@0.2.7;
+
+	export greeter;
+}
+
+package wasi:io@0.2.7 {
+    interface error {
+        resource error {
+            to-debug-string: func() -> string;
+        }
+    }
+
+    interface streams {
+        use error.{error};
+
+        variant stream-error {
+            last-operation-failed(error),
+            closed,
+        }
+
+        resource output-stream {
+            blocking-write-and-flush: func(contents: list<u8>) -> result<_, stream-error>;
+        }
+    }
+
+    world imports {
+        import error;
+        import streams;
+    }
+}
+
+package wasi:cli@0.2.7 {
+    interface stdout {
+        use wasi:io/streams@0.2.7.{output-stream};
+
+        get-stdout: func() -> output-stream;
+    }
+
+    world imports {
+        import stdout;
+    }
+}
