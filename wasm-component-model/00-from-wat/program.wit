@@ -1,0 +1,9 @@
+package tutorial:program@0.1.0;
+
+interface adder {
+	add: func(x: u32, y: u32) -> u32;
+}
+
+world program {
+	export adder;
+}
