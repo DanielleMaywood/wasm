@@ -1,7 +1,9 @@
 (module
+  (; https://github.com/WebAssembly/wasi-libc/blob/bbb0c01b112f8c3aaa1974407c5302a26b88babb/libc-bottom-half/sources/wasip2.c#L81 ;)
   (import "wasi:cli/stdout@0.2.7" "get-stdout"
     (func $get_stdout (result (; ref output-stream ;) i32)))
 
+  (; https://github.com/WebAssembly/wasi-libc/blob/bbb0c01b112f8c3aaa1974407c5302a26b88babb/libc-bottom-half/sources/wasip2.c#L54 ;)
   (import "wasi:io/streams@0.2.7" "[method]output-stream.blocking-write-and-flush"
       (func $blocking_write_and_flush
         (param (; ref output-stream ;) i32)
@@ -9,9 +11,9 @@
         (param (; len of list ;) i32)
         (param (; ptr of result ;) i32)))
 
-  (memory 1)
+  (memory $memory 1)
 
-  (export "memory" (memory 0))
+  (export "memory" (memory $memory))
 
   ;; Store a hello world string into memory at offset 0
   (data (i32.const 0) "Hello World!")
