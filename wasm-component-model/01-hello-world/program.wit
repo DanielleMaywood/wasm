@@ -7,6 +7,7 @@ interface greeter {
 world program {
 	import wasi:io/streams@0.2.7;
 	import wasi:cli/stdout@0.2.7;
+	export wasi:cli/run@0.2.7;
 
 	export greeter;
 }
@@ -46,5 +47,13 @@ package wasi:cli@0.2.7 {
 
     world imports {
         import stdout;
+    }
+
+    interface run {
+        run: func() -> result;
+    }
+
+    world command {
+        export run;
     }
 }

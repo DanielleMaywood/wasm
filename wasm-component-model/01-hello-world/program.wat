@@ -16,15 +16,22 @@
   (export "memory" (memory $memory))
 
   ;; Store a hello world string into memory at offset 0
-  (data (i32.const 0) "Hello World!")
+  (data (i32.const 0) "Hello World!\n")
 
   (func $greet
     call $get_stdout ;; we want to write to stdout
     i32.const 0      ;; the address of our string in memory
-    i32.const 12     ;; and how long the string is
-    i32.const 12     ;; the address to store the result at
+    i32.const 13     ;; and how long the string is
+    i32.const 16     ;; the address to store the result at
     call $blocking_write_and_flush
   )
 
   (export "tutorial:program/greeter@0.1.0#hello" (func $greet))
+
+  (func $run (result i32)
+    (call $greet)
+    (i32.const 0)
+  )
+
+  (export "wasi:cli/run@0.2.7#run" (func $run))
 )

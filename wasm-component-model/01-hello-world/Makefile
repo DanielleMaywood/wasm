@@ -3,7 +3,7 @@
 build: program.component.wasm
 
 run: build
-	wasmtime run --invoke 'hello()' program.component.wasm
+	wasmtime run program.component.wasm
 
 program.component.wasm: program.wasm
 	wasm-tools component new $< -o $@
