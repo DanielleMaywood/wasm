@@ -1,15 +1,10 @@
 package tutorial:program@0.1.0;
 
-interface greeter {
-	hello: func();
-}
-
 world program {
 	import wasi:io/streams@0.2.7;
 	import wasi:cli/stdout@0.2.7;
-	export wasi:cli/run@0.2.7;
 
-	export greeter;
+	export wasi:cli/run@0.2.7;
 }
 
 package wasi:io@0.2.7 {
